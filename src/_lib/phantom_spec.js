@@ -26,7 +26,7 @@ var JsonData = function (code, msg, data) {
 	this.msg = msg || "";
 	this.data = data || {};
 };
-(function (logic, util) {
+(function (logic) {
 	//初始化page
 	var initPage = function () {
 		page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36';
@@ -37,7 +37,7 @@ var JsonData = function (code, msg, data) {
 		}
 		page.viewportSize = {width: 1280, height: 980};
 		try {
-			console.log("ddsd");
+			//console.log(system.args[1]);
 			urlInfo = JSON.parse(system.args[1]);
 			url = decodeURIComponent(urlInfo.url);
 			page.settings.resourceTimeout = urlInfo.timeout;
@@ -198,33 +198,37 @@ var JsonData = function (code, msg, data) {
 			var fs = require('fs');
 			//如果没有指定路径，默认是当前目录_lib;
 			var test_path = urlInfo.generatePath || '.';
-			console.log(urlInfo.generatePath);
 			//quality清晰度，用1就够了，用100的话，生成的一张图片有几十M了
-			var name = '/' + util.getDomain(page.url) + new Date()._getDate();
+			var name = '\\' + this.getDomain(page.url) + new Date()._getDate();
+			console.log(name);
 			page.render(test_path + name + '.png', {format: 'PNG', quality: '1'});
 			fs.write(test_path + name + '.html', page.content, 'w');
 		}
-	}
-}, {
+	},
 	getDomain: function (url) {
-		if (!url) {
+		if(!url){
 			return "";
 		}
 		var domains = [
-			'.com',
-			'.com.cn',
-			'.cn',
-			'.org',
-			'.net',
-			'.hk',
-			'.co.jp',
-			'.co.uk'
+			'com',
+			'cn',
+			'org',
+			'net',
+			'hk',
+			'cc',
+			'top',
+			'wang',
+			'tv',
+			'de',
+			'com.cn',
+			'com.hk',
+			'co.jp'
 		];
-		domains = new RegExp(domains.join('|'));
-		return url.replace(/([-\w]+\.\b(?:domains)\b)/, "$1");
-	},
-	getDate: function (date) {
-
+		var domain = new RegExp('\([-\\w]+.\(\?\:'+domains.join('|')+'\)\)').exec(url);
+		if(domain && domain.length > 1){
+			return domain[1];
+		}
+		return "";
 	}
 }));
 Date.prototype._getDate = function (d) {

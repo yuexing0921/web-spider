@@ -32,11 +32,8 @@ var downloader = function(_baseDownloader) {
 	cmdLines.push('--config=' + configJson);
 
 	//3. 添加动态phantomjs 命令
-	if(urlInfo.phantomLines && urlInfo.phantomLines.length > 0) {
-		console.log(urlInfo.phantomLines);
-		cmdLines.push(urlInfo.phantomLines.join(' '));
-	};
-	console.log(cmdLines);
+	urlInfo.phantomLines && urlInfo.phantomLines.length > 0 && cmdLines.push(urlInfo.phantomLines.join(' '));
+
 	//4. 添加和phantomjs桥接js
 	let phantomBridgeJs = urlInfo.phantomBridgeJs || 'phantom_spec.js';
 	cmdLines.push(phantomBridgeJs);
@@ -44,6 +41,8 @@ var downloader = function(_baseDownloader) {
 	//5. 添加命令参数
 	//为了防止url截断，所以对其encode，用spawn模式的话，可以不用encode
 	urlInfo.url = encodeURIComponent(urlInfo.url);
+	//urlInfo.phantomConfig = encodeURIComponent(urlInfo.phantomConfig);
+	//urlInfo.generatePath = encodeURIComponent(urlInfo.generatePath);
 	cmdLines.push(JSON.stringify(JSON.stringify(urlInfo)));//在exec模式下，会对其自动解析，所以需要双层stringify，如果是spawn，则只需要一层就够了
 
 	//6. 执行phantomjs 命令
@@ -84,7 +83,7 @@ var downloader = function(_baseDownloader) {
 	//获取phantomjs的数据
 	phantomChild.stdout.on('data', function (data) {
 		//console.info("phantomChild data");
-		//console.info(data);
+		console.info(data);
 		data = data.trim();
 		if (receivedData == '' && !data.startsWith('{')) {
 			killPhantomjs('phantomChild: ' + data);
