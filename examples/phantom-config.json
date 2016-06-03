@@ -1,0 +1,6 @@
+{
+	"diskCache":"true",
+	"outputEncoding" : "utf8",
+	"ignoreSslErrors" : "true",
+	"localToRemoteUrlAccess" : "true"
+}

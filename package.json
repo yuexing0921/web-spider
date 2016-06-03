@@ -1,0 +1,41 @@
+{
+  "name": "ispider",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "iSpider is a simple & fast web spider written with Nodejs!",
+  "homepage": "https://github.com/yuexing0921/iSpider",
+  "author": "yue xing  <yuexing0921@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuexing0921/iSpider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yuexing0921/iSpider/issues"
+  },
+  "main": "lib/index.js",
+  "keywords": [
+    "crawler",
+    "spider",
+    "phantomjs",
+    "superagent",
+    "jquery",
+    "simplecrawler",
+    "simplespider",
+    "cheerio"
+  ],
+  "engines": {
+    "node": ">0.12"
+  },
+  "scripts": {
+    "lint": "eslint example/ src/ ",
+    "build": "babel src -d build"
+  },
+  "dependencies": {
+    "superagent": "^1.4.0"
+  },
+  "devDependencies": {
+    "args": "0.0.3",
+    "cheerio": "^0.20.0",
+	"async": "^1.5.0"
+  }
+}

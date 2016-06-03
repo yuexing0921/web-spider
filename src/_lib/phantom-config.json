@@ -1,0 +1,7 @@
+{
+	"diskCache":"true",
+	"loadImages" : "false",
+	"outputEncoding" : "utf8",
+	"ignoreSslErrors" : "true",
+	"localToRemoteUrlAccess" : "true"
+}
