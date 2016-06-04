@@ -9,12 +9,11 @@ const child_process = require('child_process');
 const path = require('path');
 const osType = require('os').type();
 /**
- *http://phantomChild.org/api/child_process/
  * @param {object} _baseDownloader downloader对象
  * */
-var downloader = function(_baseDownloader) {
-	let baseSelf = _baseDownloader,
-		urlInfo = _baseDownloader.urlInfo,
+var downloader = function(_spiderCore) {
+	let baseSelf = _spiderCore,
+		urlInfo = _spiderCore.urlInfo,
 		baseMsgCode = baseSelf.setting._config.baseMsgCode,
 		cwdPath = path.resolve(baseSelf.cwdPath, '../src/_lib');
 	if (!urlInfo) {
