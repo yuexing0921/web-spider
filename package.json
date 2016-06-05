@@ -1,6 +1,6 @@
 {
   "name": "web-spider",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "description": "web-spider is a simple and fast web spider written with Nodejs!",
   "homepage": "https://github.com/yuexing0921/web-spider",
@@ -27,15 +27,18 @@
     "node": ">0.12"
   },
   "scripts": {
-    "lint": "eslint example/ src/ ",
-    "build": "babel src -d build"
+    "lint": "eslint example/ src/ test/",
+    "mocha": "mocha --recursive",
+    "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
     "superagent": "^1.4.0"
   },
   "devDependencies": {
     "args": "0.0.3",
+    "async": "^1.5.0",
+    "chai": "^3.5.0",
     "cheerio": "^0.20.0",
-	"async": "^1.5.0"
+    "mocha": "^2.5.3"
   }
 }

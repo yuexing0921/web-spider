@@ -24,8 +24,8 @@ module.exports = {
 		"fetchJsonp"              : true,
 		"EJS"                     : true,
 		"md5"                     : true,
-		"__non_webpack_require__" : true,
-		"Cookies"                 : true
+		"Cookies"                 : true,
+		"phantom"                 : true
 	},
 	"rules": {
 		"no-console"      : [ "off" ],

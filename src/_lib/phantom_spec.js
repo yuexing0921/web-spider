@@ -132,7 +132,7 @@ var JsonData = function (code, msg, data) {
 		 * @param {object} req
 		 * */
 		page.onResourceError = function (err) {
-			if (resourceError.url === page.url) {
+			if (err.url === page.url) {
 				logic.sendToNode(new JsonData(MsgCode.FAIL, 'Unable to load resourc',
 					{
 						"url": err.url,
