@@ -1,16 +1,16 @@
 {
-  "name": "ispider",
-  "version": "0.0.4",
+  "name": "web-spider",
+  "version": "0.0.5",
   "license": "MIT",
-  "description": "iSpider is a simple and fast web spider written with Nodejs!",
-  "homepage": "https://github.com/yuexing0921/iSpider",
+  "description": "web-spider is a simple and fast web spider written with Nodejs!",
+  "homepage": "https://github.com/yuexing0921/web-spider",
   "author": "yue xing  <yuexing0921@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yuexing0921/iSpider.git"
+    "url": "git+https://github.com/yuexing0921/web-spider.git"
   },
   "bugs": {
-    "url": "https://github.com/yuexing0921/iSpider/issues"
+    "url": "https://github.com/yuexing0921/web-spider/issues"
   },
   "main": "lib/index.js",
   "keywords": [
