@@ -1,8 +1,8 @@
 {
   "name": "ispider",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "license": "MIT",
-  "description": "iSpider is a simple & fast web spider written with Nodejs!",
+  "description": "iSpider is a simple and fast web spider written with Nodejs!",
   "homepage": "https://github.com/yuexing0921/iSpider",
   "author": "yue xing  <yuexing0921@gmail.com>",
   "repository": {
