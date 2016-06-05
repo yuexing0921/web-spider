@@ -1,4 +1,4 @@
-# ispder
+# web-sipder
 这是一个用superagent + phantomjs 写的一个小爬虫，尽量简单，代码几乎都是用ES6语法写的，简单直白。
 
 
