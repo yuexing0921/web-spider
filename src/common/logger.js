@@ -12,7 +12,10 @@ let Levels = {
 };
 let level = Levels.INFO;
 class logger {
-	static _log(type,_arguments){
+	static _log(type,_level,_arguments){
+		if(_level && _level < level){
+			return;
+		}
 		var args = Array.prototype.slice.call(_arguments);
 		if (args.length > 1) {
 			var i = 1, hasstyle = false;
@@ -55,33 +58,23 @@ class logger {
 		}
 	}
 	static trace() {
-		if(Levels.TRACE >= level){
-			this._log("log",arguments);
-		}
+		this._log("log",Levels.TRACE,arguments);
 	}
 
 	static debug() {
-		if(Levels.DEBUG >= level){
-			this._log("log",arguments);
-		}
+		this._log("log",Levels.DEBUG,arguments);
 	}
 
 	static info() {
-		if(Levels.INFO >= level){
-			this._log("info",arguments);
-		}
+		this._log("info",Levels.INFO,arguments);
 	}
 
 	static warn() {
-		if(Levels.WARN >= level){
-			this._log("warn",arguments);
-		}
+		this._log("warn",Levels.WARN,arguments);
 	}
 
 	static error() {
-		if(Levels.ERROR >= level){
-			this._log("error",arguments);
-		}
+		this._log("error",Levels.ERROR,arguments);
 	}
 
 	static fatal() {
