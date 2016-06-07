@@ -14,6 +14,7 @@ const osType = require('os').type();
 var downloader = function(_spiderCore) {
 	let baseSelf = _spiderCore,
 		urlInfo = _spiderCore.urlInfo,
+		logger = _spiderCore.logger,
 		baseMsgCode = baseSelf.setting._config.baseMsgCode,
 		cwdPath = path.resolve(baseSelf.cwdPath, '../src/_lib');
 	if (!urlInfo) {
@@ -45,7 +46,7 @@ var downloader = function(_spiderCore) {
 	cmdLines.push(JSON.stringify(JSON.stringify(urlInfo)));//在exec模式下，会对其自动解析，所以需要双层stringify，如果是spawn，则只需要一层就够了
 
 	//6. 执行phantomjs 命令
-	console.info(cmdLines.join(' '));
+	logger.info(cmdLines.join(' '));
 	let phantomChild = child_process.exec(
 		cmdLines.join(' '),
 		{cwd: cwdPath, stdio: 'pipe',maxBuffer:2000*1024, timeout:urlInfo.timeout || 5000}
@@ -81,8 +82,8 @@ var downloader = function(_spiderCore) {
 	let receivedData = '';
 	//获取phantomjs的数据
 	phantomChild.stdout.on('data', function (data) {
-		//console.info("phantomChild data");
-		console.info(data);
+		//logger.info("phantomChild data");
+		logger.info(data);
 		data = data.trim();
 		if (receivedData == '' && !data.startsWith('{')) {
 			killPhantomjs('phantomChild: ' + data);
@@ -111,11 +112,11 @@ var downloader = function(_spiderCore) {
 	});
 
 	phantomChild.on('exit', function (code) {
-		if (code != 0)console.error('child process exited with code ' + code);
+		if (code != 0)logger.error('child process exited with code ' + code);
 	});
 
 	phantomChild.on('close', function (signal) {
-		if (signal != 0)console.error('child process closed with signal ' + signal);
+		if (signal != 0)logger.error('child process closed with signal ' + signal);
 	});
 };
 module.exports = downloader;

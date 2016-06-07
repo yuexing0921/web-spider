@@ -6,7 +6,7 @@
 const EventEmitter = require('events');
 const util = require('util');
 const path = require('path');
-
+let logger = require('./common/logger');
 class SpiderCore extends EventEmitter {
 	constructor(setting){
 		super();
@@ -14,10 +14,14 @@ class SpiderCore extends EventEmitter {
 		this.setting = setting;
 		this.setting._config = require('./config');
 		setting.spiderCore = this.spiderCore;
+		if(setting.logLevel){
+			logger.setLevel(setting.logLevel);
+		}
+		setting.logger = logger;
 		this.downloader = new (require('./downloader'))(setting);
 	}
 	start(){
-		console.info(this.setting.urlInfo.url + " Spider start ...");
+		logger.info(this.setting.urlInfo.url + " Spider start ...");
 		this.downloader.start();
 	}
 	//网页下载完成
@@ -30,11 +34,11 @@ class SpiderCore extends EventEmitter {
 				this.spiderCore.emit('error',data);
 			}
 		}catch(e){
-			console.error(e);
+			logger.error(e);
 			this.spiderCore.emit('error',e);
 			return false;
 		}
-		console.info("Spider end ...");
+		logger.info("Spider end ...");
 	}
 }
 module.exports = SpiderCore;
