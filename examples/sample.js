@@ -6,7 +6,7 @@ const cheerio = require('cheerio');
 const url = "https://cnodejs.org";
 
 let urlInfo = {url:url};
-let spider = new (require('../src'))({urlInfo:urlInfo});
+let spider = new (require('../'))({urlInfo:urlInfo});
 //启动爬虫
 spider.start();
 spider.on('success',(data) =>{

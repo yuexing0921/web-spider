@@ -18,7 +18,7 @@ let urlInfo = {
 	generatePath    : path.resolve(__dirname),//生成图片存放在哪里，默认：会放置在examples里面
 	timeout: 30*1000//执行的超时时间，默认：10秒
 };
-let spider = new (require('../src'))({urlInfo:urlInfo});
+let spider = new (require('../'))({urlInfo:urlInfo});
 spider.start();
 spider.on('success',(data) =>{
 	try{

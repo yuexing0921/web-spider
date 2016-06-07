@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/yuexing0921/web-spider/issues"
   },
-  "main": "lib/index.js",
+  "main": "index.js",
   "keywords": [
     "crawler",
     "spider",
