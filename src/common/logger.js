@@ -90,6 +90,13 @@ class logger {
 			level = l;
 		}
 	}
+	static getLevel(){
+		for(let k in Levels){
+			if(level == Levels[k]){
+				return k;
+			}
+		}
+	}
 }
 logger.Levels = Levels;
 exports = module.exports = logger;

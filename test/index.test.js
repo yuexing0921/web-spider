@@ -2,7 +2,7 @@
  * Created by yuexing on 2016/6/5.
  */
 var expect = require('chai').expect;
-var Spider = require('../src');
+var Spider = require('../');
 
 describe("Spider 初始化", function() {
 
