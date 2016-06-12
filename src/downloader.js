@@ -13,7 +13,7 @@ class Downloader {
 
 		if (!this.spiderCore.setting.urlInfo.generatePath) {
 			//设置测试产生的结果的路径
-			this.spiderCore.setting.urlInfo.generatePath = path.join(this.cwdPath, '../../');
+			this.spiderCore.setting.urlInfo.generatePath = this.spiderCore.runDir;
 		}
 	}
 

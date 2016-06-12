@@ -15,7 +15,7 @@ let urlInfo = {
 	phantomLines    : ['--load-images=false'],//phantomjs执行的【动态】命令，比如proxy呀，cookie文件呀，默认不用设置 //具体配置参见http://phantomChild.org/api/command-line.html
 	phantomBridgeJs : "",//和phantomjs桥接js，可以自己再写一个，默认有一个，如果要自定义，可以参照[_lib/phantom-spec.js]。
 	isGenerateImg   : true, //设置是否生成图片和html，[true] ：生成的图片会以 [域名 + 时间]组合
-	generatePath    : path.resolve(__dirname),//生成图片存放在哪里,这里设置成执行node的路径，就是examples，默认：会放置在执行的根目录下
+	//generatePath    : ,//生成图片存放在哪里,这里设置成执行node的路径，就是examples，默认：会放置在执行的根目录下
 	timeout: 30*1000//执行的超时时间，默认：10秒
 };
 let spider = new (require('../'))({urlInfo:urlInfo});

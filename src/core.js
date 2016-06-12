@@ -3,9 +3,9 @@
  * 这是爬虫的核心类
  */
 'use strict';
-const EventEmitter = require('events');
-const util         = require('util');
-const path         = require('path');
+const EventEmitter = require('events'),
+      util         = require('util'),
+      path         = require('path');
 let logger         = require('./common/logger');
 /**
  * SpiderCore的构成
@@ -25,6 +25,7 @@ class SpiderCore extends EventEmitter {
 			logger.setLevel(setting.logLevel);
 		}
 		this.logger = logger;//为了能更好的控制日志输出，用了一个中间变量做输出，不排除以后用log4js作为日志处理
+		this.runDir = path.dirname(require.main.filename);//设置执行爬虫的根目录
 
 		this.setting = setting;//启动一个爬虫实例需要的配置
 
