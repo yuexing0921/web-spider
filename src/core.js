@@ -28,13 +28,11 @@ class SpiderCore extends EventEmitter {
 		this.runDir = path.dirname(require.main.filename);//设置执行爬虫的根目录
 
 		this.setting = setting;//启动一个爬虫实例需要的配置
-
-		this.downloader = new (require('./downloader'))(this);
 	}
 
 	start() {
 		logger.info(this.setting.urlInfo.url + " Spider start ...");
-		this.downloader.start();
+		new (require('./downloader'))(this).start();
 	}
 
 	//网页下载完成
