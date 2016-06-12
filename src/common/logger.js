@@ -3,25 +3,25 @@
  * 这是仿照log4js做的一个简单的日志系统，方便调试
  */
 let Levels = {
-	TRACE : 0,
-	DEBUG : 1,
-	INFO  : 2,
-	WARN  : 3,
-	ERROR : 4,
-	FATAL : 5
+	TRACE: 0,
+	DEBUG: 1,
+	INFO : 2,
+	WARN : 3,
+	ERROR: 4,
+	FATAL: 5
 };
-let level = Levels.INFO;
+let level  = Levels.INFO;
 class logger {
-	static _log(type,_level,_arguments){
-		if(_level && _level < level){
+	static _log(type, _level, _arguments) {
+		if (_level && _level < level) {
 			return;
 		}
 		var args = Array.prototype.slice.call(_arguments);
 		if (args.length > 1) {
 			var i = 1, hasstyle = false;
 			if (args[0].indexOf("%c") == 0) {
-				args[0] = args[0].replace(/%c/, "");
-				i = 2;
+				args[0]  = args[0].replace(/%c/, "");
+				i        = 2;
 				hasstyle = true;
 			}
 			for (; i < args.length; i++) {
@@ -57,46 +57,48 @@ class logger {
 			console[type]("");
 		}
 	}
+
 	static trace() {
-		this._log("log",Levels.TRACE,arguments);
+		this._log("log", Levels.TRACE, arguments);
 	}
 
 	static debug() {
-		this._log("log",Levels.DEBUG,arguments);
+		this._log("log", Levels.DEBUG, arguments);
 	}
 
 	static info() {
-		this._log("info",Levels.INFO,arguments);
+		this._log("info", Levels.INFO, arguments);
 	}
 
 	static warn() {
-		this._log("warn",Levels.WARN,arguments);
+		this._log("warn", Levels.WARN, arguments);
 	}
 
 	static error() {
-		this._log("error",Levels.ERROR,arguments);
+		this._log("error", Levels.ERROR, arguments);
 	}
 
 	static fatal() {
-		this._log("error",arguments);
+		this._log("error", arguments);
 	}
 
-	static setLevel(type){
-		if(!type || typeof type !== 'string'){
-			return ;
+	static setLevel(type) {
+		if (!type || typeof type !== 'string') {
+			return;
 		}
 		let l = Levels[type];
-		if(level){
+		if (level) {
 			level = l;
 		}
 	}
-	static getLevel(){
-		for(let k in Levels){
-			if(level == Levels[k]){
+
+	static getLevel() {
+		for (let k in Levels) {
+			if (level == Levels[k]) {
 				return k;
 			}
 		}
 	}
 }
 logger.Levels = Levels;
-exports = module.exports = logger;
+exports       = module.exports = logger;

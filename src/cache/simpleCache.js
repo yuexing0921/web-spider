@@ -19,7 +19,7 @@ let cache = new Map(null),
 
 class SimpleCache{
 	/**
-	 * 添加缓存
+	 * 添加更新缓存
 	 * 1.先判断是否在map内，如果在,清除原来的timeoutCallback
 	 *
 	 * @param {string} key

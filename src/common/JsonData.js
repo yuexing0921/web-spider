@@ -3,13 +3,14 @@
  * 定义各类传参的基本类型
  */
 'use strict';
-class JsonData{
-	constructor(code ,msg ,data ){
+class JsonData {
+	constructor(code, msg, data) {
 		this.code = code || 2000;
-		this.msg = msg || "";
+		this.msg  = msg  || "";
 		this.data = data || {};
 	}
-	toString(){
+
+	toString() {
 		return JSON.stringify(this);
 	}
 }

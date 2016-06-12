@@ -4,38 +4,50 @@
  */
 'use strict';
 const EventEmitter = require('events');
-const util = require('util');
-const path = require('path');
-let logger = require('./common/logger');
+const util         = require('util');
+const path         = require('path');
+let logger         = require('./common/logger');
+/**
+ * SpiderCore的构成
+ * 0.{object} setting，这是一个爬虫实例的启动参数
+ * 1.{object} logger这是爬虫自身的日志输出系统，和log4js一样有六级，默认是INFO级别
+ * 2.{object} _config这是爬虫自身的一些配置，这个不需要设置
+ * */
 class SpiderCore extends EventEmitter {
-	constructor(setting){
+	/**
+	 * @param {object} setting爬虫的各项启动参数
+	 * * */
+	constructor(setting) {
 		super();
-		this.spiderCore = this;
-		this.setting = setting;
-		this.setting._config = require('./config');
-		setting.spiderCore = this.spiderCore;
-		if(setting.logLevel){
+
+		this._config = require('./config');//爬虫自身的配置
+		if (setting.logLevel) {//设置日志级别
 			logger.setLevel(setting.logLevel);
 		}
-		setting.logger = logger;
-		this.downloader = new (require('./downloader'))(setting);
+		this.logger = logger;//为了能更好的控制日志输出，用了一个中间变量做输出，不排除以后用log4js作为日志处理
+
+		this.setting = setting;//启动一个爬虫实例需要的配置
+
+		this.downloader = new (require('./downloader'))(this);
 	}
-	start(){
+
+	start() {
 		logger.info(this.setting.urlInfo.url + " Spider start ...");
 		this.downloader.start();
 	}
+
 	//网页下载完成
-	complete(data){
-		try{
-			let baseMsgCode = this.setting._config.baseMsgCode;
-			if(data.code == baseMsgCode.success){
-				this.spiderCore.emit('success',data);
-			}else{
-				this.spiderCore.emit('error',data);
+	complete(data) {
+		try {
+			let baseMsgCode = this._config.baseMsgCode;
+			if (data.code == baseMsgCode.success) {
+				this.emit('success', data);
+			} else {
+				this.emit('error', data);
 			}
-		}catch(e){
+		} catch (e) {
 			logger.error(e);
-			this.spiderCore.emit('error',e);
+			this.emit('error', e);
 			return false;
 		}
 		logger.info("Spider end ...");

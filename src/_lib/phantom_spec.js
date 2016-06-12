@@ -197,7 +197,7 @@ var JsonData = function (code, msg, data) {
 		if (urlInfo.isGenerateImg) {
 			var fs = require('fs');
 			//如果没有指定路径，默认是当前目录_lib;
-			var test_path = urlInfo.generatePath || '.';
+			var test_path = urlInfo.generatePath ;
 			//quality清晰度，用1就够了，用100的话，生成的一张图片有几十M了
 			var name = '\\' + this.getDomain(page.url) + new Date()._getDate();
 			console.log(name);

@@ -10,29 +10,29 @@ class Utils {
 	 *
 	 * @return boolean
 	 */
-	static isValidPart(urlPart){
-		if(!urlPart){
+	static isValidPart(urlPart) {
+		if (!urlPart) {
 			return false;
 		}
-		if(urlPart.indexOf("javascript") > -1){
+		if (urlPart.indexOf("javascript") > -1) {
 			return false;
 		}
-		if(urlPart.indexOf("mailto") > -1){
+		if (urlPart.indexOf("mailto") > -1) {
 			return false;
 		}
-		if(urlPart.charAt(0) === '#'){
+		if (urlPart.charAt(0) === '#') {
 			return false;
 		}
-		if(urlPart === '/'){
+		if (urlPart === '/') {
 			return false;
 		}
-		if(urlPart.substring(0,6).indexOf("data") > -1){//base64编码图片
+		if (urlPart.substring(0, 6).indexOf("data") > -1) {//base64编码图片
 			return false;
 		}
-		if(urlPart.indexOf("about:") > -1){
+		if (urlPart.indexOf("about:") > -1) {
 			return false;
 		}
-		if(urlPart.indexOf('{') > -1){
+		if (urlPart.indexOf('{') > -1) {
 			return false;
 		}
 		return true;
@@ -41,34 +41,36 @@ class Utils {
 	/**
 	 * cookies获取到的数据是一个jons对象，需要把对象转换成普通字符串才能使用
 	 * */
-	static cookiesJsonToStr(jsonObj){
+	static cookiesJsonToStr(jsonObj) {
 		var str = "";
-		if(!jsonObj){
+		if (!jsonObj) {
 			return str;
 		}
-		for(var k in jsonObj){
+		for (var k in jsonObj) {
 			str += k + "=" + jsonObj[k] + ";";
 		}
 		return str;
 	}
+
 	/**
 	 * 获取一个url的域名
 	 * */
-	static getHost(url){
-		if(!url){
+	static getHost(url) {
+		if (!url) {
 			return "";
 		}
-		var host =/.*\:\/\/([^\/]*).*/.exec(url);
-		if(host && host.length > 1){
+		var host = /.*\:\/\/([^\/]*).*/.exec(url);
+		if (host && host.length > 1) {
 			return host[1];
 		}
 		return "";
 	}
+
 	/**
 	 * 获取一个url的一级域名 TODO 这个就一些常用的域名，如果有其他的，可以告诉我，我会添加上去
 	 * */
-	static getDomain(url){
-		if(!url){
+	static getDomain(url) {
+		if (!url) {
 			return "";
 		}
 		var domains = [
@@ -86,8 +88,8 @@ class Utils {
 			'com.hk',
 			'co.jp'
 		];
-		var domain = new RegExp('\([-\\w]+.\(\?\:'+domains.join('|')+'\)\)').exec(url);
-		if(domain && domain.length > 1){
+		var domain  = new RegExp('\([-\\w]+.\(\?\:' + domains.join('|') + '\)\)').exec(url);
+		if (domain && domain.length > 1) {
 			return domain[1];
 		}
 		return "";
