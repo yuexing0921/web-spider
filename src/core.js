@@ -5,8 +5,10 @@
 'use strict';
 const EventEmitter = require('events'),
       util         = require('util'),
-      path         = require('path');
-let logger         = require('./common/logger');
+      path         = require('path'),
+      cheerio      = require('cheerio');
+const Utils       = require('./common/Utils');
+let logger        = require('./common/logger');
 /**
  * SpiderCore的构成
  * 0.{object} setting，这是一个爬虫实例的启动参数
@@ -31,6 +33,7 @@ class SpiderCore extends EventEmitter {
 	}
 
 	start() {
+		checkSetting(this.setting);//检查setting设置是否合法
 		logger.info(this.setting.urlInfo.url + " Spider start ...");
 		new (require('./downloader'))(this).start();
 	}
@@ -40,6 +43,10 @@ class SpiderCore extends EventEmitter {
 		try {
 			let baseMsgCode = this._config.baseMsgCode;
 			if (data.code == baseMsgCode.success) {
+				//定义了cheerioQuery类，那么会执行cheerio转义
+				if(this.setting.urlInfo.cheerioQuery){
+					data.data.cheerioQueryResult = this.setting.urlInfo.cheerioQuery._query(cheerio.load(data.data.content));
+				}
 				this.emit('success', data);
 			} else {
 				this.emit('error', data);
@@ -52,4 +59,9 @@ class SpiderCore extends EventEmitter {
 		logger.info("Spider end ...");
 	}
 }
+let checkSetting = function(setting){
+	if(!Utils.isLegitimate(setting.urlInfo.url)){
+		throw new Error("urlInfo.url设置的不合法");
+	}
+};
 module.exports = SpiderCore;

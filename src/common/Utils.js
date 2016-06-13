@@ -6,33 +6,33 @@ class Utils {
 	/**
 	 * @desc 判断是否是合法的URL地址一部分
 	 *
-	 * @param {string} urlPart
+	 * @param {string} url
 	 *
 	 * @return boolean
 	 */
-	static isValidPart(urlPart) {
-		if (!urlPart) {
+	static isLegitimate(url) {
+		if (!url) {
 			return false;
 		}
-		if (urlPart.indexOf("javascript") > -1) {
+		if (url.indexOf("javascript") > -1) {
 			return false;
 		}
-		if (urlPart.indexOf("mailto") > -1) {
+		if (url.indexOf("mailto") > -1) {
 			return false;
 		}
-		if (urlPart.charAt(0) === '#') {
+		if (url.charAt(0) === '#') {
 			return false;
 		}
-		if (urlPart === '/') {
+		if (url === '/') {
 			return false;
 		}
-		if (urlPart.substring(0, 6).indexOf("data") > -1) {//base64编码图片
+		if (url.substring(0, 6).indexOf("data") > -1) {//base64编码图片
 			return false;
 		}
-		if (urlPart.indexOf("about:") > -1) {
+		if (url.indexOf("about:") > -1) {
 			return false;
 		}
-		if (urlPart.indexOf('{') > -1) {
+		if (url.indexOf('{') > -1) {
 			return false;
 		}
 		return true;
