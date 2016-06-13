@@ -45,6 +45,7 @@ class SpiderCore extends EventEmitter {
 			if (data.code == baseMsgCode.success) {
 				//定义了cheerioQuery类，那么会执行cheerio转义
 				if(this.setting.urlInfo.cheerioQuery){
+
 					data.data.cheerioQueryResult = this.setting.urlInfo.cheerioQuery._query(cheerio.load(data.data.content));
 				}
 				this.emit('success', data);

@@ -1,6 +1,6 @@
 {
   "name": "web-spider",
-  "version": "0.0.12",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "web-spider is a simple and fast web spider written with Nodejs!",
   "homepage": "https://github.com/yuexing0921/web-spider",
@@ -32,13 +32,13 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
+    "async": "^1.5.0",
+    "cheerio": "^0.20.0",
     "superagent": "^1.4.0"
   },
   "devDependencies": {
     "args": "0.0.3",
-    "async": "^1.5.0",
     "chai": "^3.5.0",
-    "cheerio": "^0.20.0",
     "mocha": "^2.5.3"
   }
 }
