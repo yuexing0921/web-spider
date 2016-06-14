@@ -18,10 +18,6 @@ var dynamicDownloader = function (_baseDownloader) {
 	    logger      = spiderCore.logger,
 	    baseMsgCode = spiderCore._config.baseMsgCode,
 	    cwdPath     = path.resolve(_baseDownloader.cwdPath, '../src/_lib');
-	if (!urlInfo) {
-		this.sendData('phantomChild urlInfo is  null ');
-		return false;
-	}
 
 	//兼容windows
 	let cmd      = /Windows/.test(osType) ? 'phantomjs' : './phantomjs';

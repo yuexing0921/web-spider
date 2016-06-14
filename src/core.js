@@ -61,6 +61,9 @@ class SpiderCore extends EventEmitter {
 	}
 }
 let checkSetting = function(setting){
+	if (!setting.urlInfo) {
+		throw new Error("urlInfo不能为空");
+	}
 	if(!Utils.isLegitimate(setting.urlInfo.url)){
 		throw new Error("urlInfo.url设置的不合法");
 	}
