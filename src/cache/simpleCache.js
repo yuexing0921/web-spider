@@ -11,13 +11,12 @@
  * </p>
  *
  */
-let cache = new Map(null),
-	temp = Object.create(null);
-	debug = false,
-	hitCount = 0,
-	missCount = 0;
+class SimpleCache extends Map{
 
-class SimpleCache{
+	constructor() {
+		super(arguments);
+		this.oldCache = new Map(null);
+	}
 	/**
 	 * 添加更新缓存
 	 * 1.先判断是否在map内，如果在,清除原来的timeoutCallback
@@ -28,18 +27,13 @@ class SimpleCache{
 	 * @param {function} timeoutCallback
 	 * @return {boolean} true添加成功，false添加失败
 	 * **/
-	static put(key, value, timeout, timeoutCallback){
-		temp = {
+	set(key, value, timeout = 0, timeoutCallback){
+		let temp = {
 			value : value,
-			timeout : timeout || 0,
+			timeout : timeout,
 			timeoutCallback : timeoutCallback
 		};
-
-
-		if(cache.has(key)){
-
-		}
-		cache.set(key,temp);
+		super.set(key,temp);
 	}
 
 
@@ -49,18 +43,16 @@ class SimpleCache{
 	 * @param {string} key
 	 * @return {boolean} true添加成功，false添加失败
 	 * **/
-	static delete(key){
-		return cache.delete(key);
+	 delete(key){
+		return super.delete(key);
 	}
 
-	static clear(){
-		return cache.clear();
+	 clear(){
+		return super.clear();
 	}
 
-	static keys(){
-		return cache.keys();
+	 keys(){
+		return super.keys();
 	}
-
 }
-SimpleCache.length = cache.size;
 exports = module.exports = SimpleCache;

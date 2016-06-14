@@ -200,7 +200,7 @@ var JsonData = function (code, msg, data) {
 			var test_path = urlInfo.generatePath ;
 			//quality清晰度，用1就够了，用100的话，生成的一张图片有几十M了
 			var name = '\\' + this.getDomain(page.url) + new Date()._getDate();
-			console.log(name);
+			//console.log(name);
 			page.render(test_path + name + '.png', {format: 'PNG', quality: '1'});
 			fs.write(test_path + name + '.html', page.content, 'w');
 		}
