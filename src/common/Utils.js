@@ -94,5 +94,13 @@ class Utils {
 		}
 		return "";
 	}
+
+	static getProtocol(url) {
+		var protocol = /https?:/gi.exec(url);
+		if (protocol && protocol.length > 0) {
+			return protocol[0];
+		}
+		return 'http:';
+	}
 }
 module.exports = Utils;
