@@ -15,8 +15,10 @@ class textUtil {
 			new Error("$和conf不能为空");
 		}
 		var $str = "";
-		if (!conf.$str) {
+		if(!conf.$str){
 			$str = conf;
+		}else{
+			$str = conf.$str;
 		}
 		var $el = $($str), info = "";
 		if ($el.length) {
