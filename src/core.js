@@ -8,6 +8,7 @@ const EventEmitter = require('events'),
       path         = require('path'),
       cheerio      = require('cheerio');
 const Utils       = require('./common/Utils');
+let cache         = require('./cache');
 let logger        = require('./common/logger');
 /**
  * SpiderCore的构成
@@ -28,14 +29,21 @@ class SpiderCore extends EventEmitter {
 		}
 		this.logger = logger;//为了能更好的控制日志输出，用了一个中间变量做输出，不排除以后用log4js作为日志处理
 		this.runDir = path.dirname(require.main.filename);//设置执行爬虫的根目录
-
+		this._simpleCache = new cache.SimpleCache();//用于缓存抓取的url
+		this._urlListCache = [];//用于缓存url
 		this.setting = setting;//启动一个爬虫实例需要的配置
 	}
 
 	start() {
 		checkSetting(this.setting);//检查setting设置是否合法
+		var url = this.setting.urlInfo.url;
+		var cache = this._simpleCache.get(url);
 		logger.info(this.setting.urlInfo.url + " Spider start ...");
-		new (require('./downloader'))(this).start();
+		if(cache){
+			complete(cache.value);
+		}else{
+			new (require('./downloader'))(this).start();
+		}
 	}
 
 	//网页下载完成
@@ -43,11 +51,12 @@ class SpiderCore extends EventEmitter {
 		try {
 			let baseMsgCode = this._config.baseMsgCode;
 			if (data.code == baseMsgCode.success) {
-				//定义了cheerioQuery类，那么会执行cheerio转义
-				if(this.setting.urlInfo.cheerioQuery){
-
-					data.data.cheerioQueryResult = this.setting.urlInfo.cheerioQuery._query(cheerio.load(data.data.content));
-				}
+				this._simpleCache.set(this.setting.urlInfo.url,data);
+				var $ = cheerio.load(data.data.content);
+				var list = [];
+				$('a').each((k, obj)=>{
+					list.push($(obj).attr("href"));
+				});
 				this.emit('success', data);
 			} else {
 				this.emit('error', data);
