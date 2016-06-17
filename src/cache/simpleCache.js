@@ -11,11 +11,16 @@
  * </p>
  *
  */
+const fs = require('fs');
+const stringUtil = require('../common/stringUtil');
 class SimpleCache extends Map{
 
-	constructor() {
-		super(arguments);
-		this.oldCache = new Map(null);
+	constructor(fileName) {
+		super();
+		if(fileName){
+			var filters = fs.readFileSync(fileName,'utf8');
+			this.oldCache = stringUtil.jsonStrToMap(filters);
+		}
 	}
 	/**
 	 * 添加更新缓存
@@ -54,5 +59,22 @@ class SimpleCache extends Map{
 	 keys(){
 		return super.keys();
 	}
+
+	/**
+	 * 用于保存成json字符串
+	 * */
+	save(fileName,callback){
+		var _fileName = fileName;
+		if(!fileName){
+			_fileName = "cache.json";
+		}
+		var _self = this;
+
+		fs.writeFile(_fileName, stringUtil.mapToJson(_self), function(err) {
+			if(callback && typeof callback == 'function'){
+				callback(err, self);
+			}
+		});
+	}
 }
-exports = module.exports = SimpleCache;
+module.exports = SimpleCache;

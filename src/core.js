@@ -7,7 +7,7 @@ const EventEmitter = require('events'),
       util         = require('util'),
       path         = require('path'),
       cheerio      = require('cheerio');
-const Utils       = require('./common/Utils');
+const urlUtil       = require('./common/urlUtil');
 let cache         = require('./cache');
 let logger        = require('./common/logger');
 /**
@@ -30,7 +30,7 @@ class SpiderCore extends EventEmitter {
 		this.logger = logger;//为了能更好的控制日志输出，用了一个中间变量做输出，不排除以后用log4js作为日志处理
 		this.runDir = path.dirname(require.main.filename);//设置执行爬虫的根目录
 		this._simpleCache = new cache.SimpleCache();//用于缓存抓取的url
-		this._urlListCache = [];//用于缓存url
+		this._urlListCache =  new cache.SimpleCache();//用于缓存url
 		this.setting = setting;//启动一个爬虫实例需要的配置
 	}
 
@@ -73,7 +73,7 @@ let checkSetting = function(setting){
 	if (!setting.urlInfo) {
 		throw new Error("urlInfo不能为空");
 	}
-	if(!Utils.isLegitimate(setting.urlInfo.url)){
+	if(!urlUtil.isLegitimate(setting.urlInfo.url)){
 		throw new Error("urlInfo.url设置的不合法");
 	}
 };

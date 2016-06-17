@@ -2,7 +2,7 @@
  * Created by yuexing on 2016/6/15.
  * text文本处理共通类
  */
-class textUtil {
+class TextUtil {
 	/**
 	 * 通过jq选择器，返回相应的值
 	 * @param {object} $ jquery对象或者类似对象
@@ -32,4 +32,4 @@ class textUtil {
 	}
 
 }
-module.exports = textUtil;
+module.exports = TextUtil;

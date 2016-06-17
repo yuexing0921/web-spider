@@ -2,7 +2,7 @@
  * 工具类
  */
 'use strict';
-class Utils {
+class UrlUtil {
 	/**
 	 * @desc 判断是否是合法的URL地址一部分
 	 *
@@ -103,4 +103,4 @@ class Utils {
 		return 'http:';
 	}
 }
-module.exports = Utils;
+module.exports = UrlUtil;
