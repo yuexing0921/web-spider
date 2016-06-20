@@ -11,7 +11,7 @@ const osType          = require('os').type();
 /**
  * @param {object} _baseDownloader downloader对象
  * */
-var dynamicDownloader = function (_baseDownloader) {
+let dynamicDownloader = function (_baseDownloader) {
 
 	let spiderCore    = _baseDownloader.spiderCore,
 	    urlInfo     = spiderCore.setting.urlInfo,

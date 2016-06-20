@@ -4,7 +4,7 @@
  */
 'use strict';
 const request  = require('superagent');
-var downloader = function (_baseDownloader) {
+let downloader = function (_baseDownloader) {
 	let spiderCore  = _baseDownloader.spiderCore,
 	    urlInfo   = spiderCore.setting.urlInfo,
 	    startTime = Date.now();

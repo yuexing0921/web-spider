@@ -5,8 +5,7 @@
 'use strict';
 const EventEmitter = require('events'),
       util         = require('util'),
-      path         = require('path'),
-      cheerio      = require('cheerio');
+      path         = require('path');
 const urlUtil       = require('./common/urlUtil');
 let cache         = require('./cache');
 let logger        = require('./common/logger');
@@ -51,12 +50,7 @@ class SpiderCore extends EventEmitter {
 		try {
 			let baseMsgCode = this._config.baseMsgCode;
 			if (data.code == baseMsgCode.success) {
-				this._simpleCache.set(this.setting.urlInfo.url,data);
-				var $ = cheerio.load(data.data.content);
-				var list = [];
-				$('a').each((k, obj)=>{
-					list.push($(obj).attr("href"));
-				});
+
 				this.emit('success', data);
 			} else {
 				this.emit('error', data);
