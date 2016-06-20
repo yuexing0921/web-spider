@@ -11,26 +11,26 @@
 //默认值[true] 代表的是用node启动，false代表就是用纯命令启动
 var isNode = true;
 
-var page = require('webpage').create(),
-	system = require('system'),
-	urlInfo, url, startTime = Date.now();
+var page                    = require('webpage').create(),
+    system                  = require('system'),
+    urlInfo, url, startTime = Date.now();
 //定义phantomjs是否执行成功的基本code
-var MsgCode = {
-	SUCCESS: 2000,
-	FAIL: 50000000,
+var MsgCode                 = {
+	SUCCESS           : 2000,
+	FAIL              : 50000000,
 	NAVIGATE_EXCEPTION: 40000000
 };
 //定义和node传送数据的基本格式
-var JsonData = function (code, msg, data) {
+var JsonData                = function (code, msg, data) {
 	this.code = code || MsgCode.SUCCESS;
-	this.msg = msg || "";
+	this.msg  = msg || "";
 	this.data = data || {};
 };
 (function (logic) {
 	//初始化page
 	var initPage = function () {
 		page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36';
-		page.viewportSize = {width: 1280, height: 980};
+		page.viewportSize       = {width: 1280, height: 980};
 		if (system.args.length === 1) {
 			logic.sendToNode(new JsonData(MsgCode.NAVIGATE_EXCEPTION, 'Usage: phantom_spec.js <some URL>', {}));
 			phantom.exit();
@@ -38,8 +38,8 @@ var JsonData = function (code, msg, data) {
 		page.viewportSize = {width: 1280, height: 980};
 		try {
 			//console.log(system.args[1]);
-			urlInfo = JSON.parse(system.args[1]);
-			url = decodeURIComponent(urlInfo.url);
+			urlInfo                       = JSON.parse(system.args[1]);
+			url                           = decodeURIComponent(urlInfo.url);
 			page.settings.resourceTimeout = urlInfo.timeout;
 		} catch (e) {
 			console.log(system.args);
@@ -49,7 +49,7 @@ var JsonData = function (code, msg, data) {
 			} else {
 				//以下处理是非node命令执行phantomjs,
 				urlInfo = {isTest: true, isLoadFinish: false, isLoadTime: 3000};
-				url = system.args[1];
+				url     = system.args[1];
 				console.log(url);
 			}
 		}
@@ -135,8 +135,8 @@ var JsonData = function (code, msg, data) {
 			if (err.url === page.url) {
 				logic.sendToNode(new JsonData(MsgCode.FAIL, 'Unable to load resourc',
 					{
-						"url": err.url,
-						"errorCode": err.errorCode,
+						"url"        : err.url,
+						"errorCode"  : err.errorCode,
 						"description": err.errorString
 					}));
 			}
@@ -148,8 +148,8 @@ var JsonData = function (code, msg, data) {
 		page.onResourceTimeout = function (err) {
 			logic.sendToNode(new JsonData(MsgCode.FAIL, 'Network timeout on resource',
 				{
-					"url": err.url,
-					"errorCode": err.errorCode,
+					"url"        : err.url,
+					"errorCode"  : err.errorCode,
 					"description": err.errorString
 				}));
 			phantom.exit(1);
@@ -166,24 +166,26 @@ var JsonData = function (code, msg, data) {
 	}());
 }({
 	//和请求的phantom程序通信
-	sendToNode: function (jsonData) {
+	sendToNode    : function (jsonData) {
 		jsonData.data.urlInfo = urlInfo;
 		// 通过writeLine会有数据传输大小限制
 		//末尾加上#phantomjs-data-end#是用来告诉node，传输的data已经传输完成。
 		system.stdout.writeLine(JSON.stringify(jsonData) + '#phantomjs-data-end#');
 	},
 	//数据处理
-	main: function (status) {
+	main          : function (status) {
 		var result = {
-			"url": page.url,
-			"statusCode": page.status,
-			"content": page.content,
-			"requestDate": Date.now() - startTime,
-			"cookies": page.cookies
+			url       : page.url,//抓取的地址
+			startTime : startTime,//开始时间
+			endTime   : Date.now() - startTime,//结束时间
+			statusCode: page.status,//状态code
+			header    : page.settings.userAgent  || "",//抓取这个页面的header信息
+			cookies   : page.cookies,
+			content   : page.content//抓取到的html结构
 		};
 		this.nodeData(status, result)
 	},
-	nodeData: function (status, result) {
+	nodeData      : function (status, result) {
 		if (status == 'success') {
 			this.testRecordData();
 			this.sendToNode(new JsonData(null, null, result));
@@ -195,18 +197,18 @@ var JsonData = function (code, msg, data) {
 	//测试模式下记录html和生成的图片
 	testRecordData: function () {
 		if (urlInfo.isGenerateImg) {
-			var fs = require('fs');
+			var fs        = require('fs');
 			//如果没有指定路径，默认是当前目录_lib;
-			var test_path = urlInfo.generatePath ;
+			var test_path = urlInfo.generatePath;
 			//quality清晰度，用1就够了，用100的话，生成的一张图片有几十M了
-			var name = '\\' + this.getDomain(page.url) + new Date()._getDate();
+			var name      = '\\' + this.getDomain(page.url) + new Date()._getDate();
 			//console.log(name);
 			page.render(test_path + name + '.png', {format: 'PNG', quality: '1'});
 			fs.write(test_path + name + '.html', page.content, 'w');
 		}
 	},
-	getDomain: function (url) {
-		if(!url){
+	getDomain     : function (url) {
+		if (!url) {
 			return "";
 		}
 		var domains = [
@@ -224,14 +226,14 @@ var JsonData = function (code, msg, data) {
 			'com.hk',
 			'co.jp'
 		];
-		var domain = new RegExp('\([-\\w]+.\(\?\:'+domains.join('|')+'\)\)').exec(url);
-		if(domain && domain.length > 1){
+		var domain  = new RegExp('\([-\\w]+.\(\?\:' + domains.join('|') + '\)\)').exec(url);
+		if (domain && domain.length > 1) {
 			return domain[1];
 		}
 		return "";
 	}
 }));
-Date.prototype._getDate = function (d) {
+Date.prototype._getDate   = function (d) {
 	d = d || new Date();
 	return [
 		d.getFullYear(),
@@ -241,9 +243,9 @@ Date.prototype._getDate = function (d) {
 		(d.getMinutes())._padLeft(),
 		(d.getSeconds())._padLeft()].join('');
 };
-Number.prototype._padLeft = function(base,chr){
-	var  len = (String(base || 10).length - String(this).length)+1;
-	return len > 0? new Array(len).join(chr || '0')+this : this;
+Number.prototype._padLeft = function (base, chr) {
+	var len = (String(base || 10).length - String(this).length) + 1;
+	return len > 0 ? new Array(len).join(chr || '0') + this : this;
 };
 
 

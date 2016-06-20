@@ -28,14 +28,14 @@ class Downloader {
 	}
 
 	//负责数据格式化以及发送
-	sendData(err, data) {
+	sendData(err, pageInfo) {
 		let baseMsgCode = this.spiderCore._config.baseMsgCode;
 		let jsonData    = new JsonData();
 		if (err) {
 			jsonData.code = baseMsgCode.serverError;
 			jsonData.msg  = String(err);
 		}
-		jsonData.data = data || {};
+		jsonData.data = pageInfo || {};
 		this.spiderCore.complete(jsonData);
 	}
 }
