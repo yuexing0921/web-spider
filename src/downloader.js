@@ -9,7 +9,7 @@ class Downloader {
 	constructor(_spiderCore) {
 		this.spiderCore = _spiderCore;
 
-		this.cwdPath    = path.resolve(__dirname);//设置执行的路径，为了防止路径过深，所以在Downloader就设置好
+		this.cwdPath = path.resolve(__dirname);//设置执行的路径，为了防止路径过深，所以在Downloader就设置好
 
 		if (!this.spiderCore.setting.urlInfo.generatePath) {
 			//设置测试产生的结果的路径
@@ -29,6 +29,8 @@ class Downloader {
 
 	//负责数据格式化以及发送
 	sendData(err, pageInfo) {
+
+
 		let baseMsgCode = this.spiderCore._config.baseMsgCode;
 		let jsonData    = new JsonData();
 		if (err) {
