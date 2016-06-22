@@ -31,6 +31,7 @@ class SpiderCore extends EventEmitter {
 		this._simpleCache = new cache.SimpleCache();//用于缓存抓取的url
 		this._urlListCache =  new cache.SimpleCache();//用于缓存url
 		this.setting = setting;//启动一个爬虫实例需要的配置
+		this.setting.urlInfo.url = encodeURI(this.setting.urlInfo.url);
 	}
 
 	start() {
