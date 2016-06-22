@@ -30,6 +30,11 @@ let dynamicDownloader = function (_baseDownloader) {
 
 	//3. 添加动态phantomjs 命令
 	urlInfo.phantomLines && urlInfo.phantomLines.length > 0 && cmdLines.push(urlInfo.phantomLines.join(' '));
+	//如果有代理的话，添加代理
+	if(urlInfo.proxy){
+		cmdLines.push('--proxy=' + urlInfo.proxy.host + ":" + urlInfo.proxy.port);
+		cmdLines.push('--proxy-auth=' + urlInfo.proxy.username + ":" + urlInfo.proxy.password);
+	}
 
 	//4. 添加和phantomjs桥接js
 	let phantomBridgeJs = urlInfo.phantomBridgeJs || 'phantom_spec.js';
