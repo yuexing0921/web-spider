@@ -33,6 +33,7 @@ let dynamicDownloader = function (_baseDownloader) {
 	//如果有代理的话，添加代理
 	if(urlInfo.proxy){
 		cmdLines.push('--proxy=' + urlInfo.proxy.host + ":" + urlInfo.proxy.port);
+		cmdLines.push('--proxy-type='+ urlInfo.proxy.protocol);
 		cmdLines.push('--proxy-auth=' + urlInfo.proxy.username + ":" + urlInfo.proxy.password);
 	}
 

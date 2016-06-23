@@ -34,7 +34,8 @@
   "dependencies": {
     "async": "^1.5.0",
     "cheerio": "^0.20.0",
-    "superagent": "^2.0.0"
+    "superagent": "^2.0.0",
+    "superagent-proxy": "^1.0.1"
   },
   "devDependencies": {
     "args": "0.0.3",

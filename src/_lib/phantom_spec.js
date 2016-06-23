@@ -177,7 +177,7 @@ var JsonData                = function (code, msg, data) {
 		var result = {
 			url       : page.url,//抓取的地址
 			startTime : startTime,//开始时间
-			endTime   : Date.now() - startTime,//结束时间
+			endTime   : Date.now(),//结束时间
 			statusCode: page.status,//状态code
 			header    : page.settings.userAgent  || "",//抓取这个页面的header信息
 			cookies   : page.cookies,

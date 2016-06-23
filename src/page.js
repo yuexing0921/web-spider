@@ -14,10 +14,9 @@ class Page {
 		this.endTime = pageInfo.endTime;//结束时间
 		this.statusCode = pageInfo.statusCode;//状态code
 		this.header = pageInfo.header;//抓取这个页面的header信息
-		this.proxy = pageInfo.proxy;//抓取这个页面的proxy信息
+		this.agentProxy = pageInfo.proxy;//抓取这个页面的proxy信息
 		this.cookies = pageInfo.cookies;//抓取这个页面的cookies信息
 		this.content = content;//抓取到的html结构
-
 		page.setUrlList(content, spiderConf);//当前页面的所有url
 
 		this.uuid = "";//TODO 这个稍微有点复杂，以后再实现
