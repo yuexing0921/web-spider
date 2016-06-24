@@ -5,20 +5,20 @@
 'use strict';
 let request = require('superagent');
 require('superagent-proxy')(request);
-let downloader         = (_baseDownloader) => {
+let downloader = (_baseDownloader) => {
 	let spiderCore = _baseDownloader.spiderCore,
 	    urlInfo    = spiderCore.setting.urlInfo,
 	    startTime  = Date.now();
 	//设置基本信息
-	request        = request.get(urlInfo.url).set(urlInfo.requestHead || {});
+	let q = request.get(urlInfo.url).set(urlInfo.requestHead || {});
 
 	//如果有proxy信息
 	if (spiderCore.proxy) {
-		request = request.proxy(spiderCore.proxy);
+		q = request.proxy(spiderCore.proxy);
 	}
 
 	//请求信息
-	request.end((err, sres) => {
+	q.end((err, sres) => {
 		if (err || !sres.ok) {
 			_baseDownloader.sendData(err, sres);
 			return false;
@@ -34,4 +34,4 @@ let downloader         = (_baseDownloader) => {
 		_baseDownloader.sendData(null, result);
 	});
 };
-module.exports         = downloader;
+module.exports = downloader;
