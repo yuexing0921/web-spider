@@ -10,27 +10,43 @@ let downloader = (_baseDownloader) => {
 	    urlInfo    = spiderCore.spiderConf.urlInfo,
 	    startTime  = Date.now();
 	//设置基本信息
-	let q = request.get(urlInfo.url).set(urlInfo.requestHead || {});
+	let q          = request.get(urlInfo.url).set(urlInfo.requestHead || {});
+
+
 
 	//如果有proxy信息
 	if (spiderCore.proxy) {
-		q = request.proxy(spiderCore.proxy);
+		q = q.proxy(spiderCore.proxy);
 	}
 
 	//请求信息
 	q.end((err, sres) => {
+
+		var result = {
+
+			statusCode     : sres.status,
+			url            : sres.request.url,
+			protocol       : sres.request.protocol,
+			host           : sres.request.host,
+			urlPath        : sres.request.req.path,
+			startTime      : startTime,
+			endTime        : Date.now(),
+
+			agentProxy     : sres.request._agent.proxy,
+
+			requestHeader  : sres.request.header || "",//
+			responseHeader : sres.headers || "",//
+			requestCookies : sres.request.cookies || "",//
+			responseCookies: sres.headers['set-cookie'] || "",//
+
+			content        : sres.text//抓取到的html结构
+		};
 		if (err || !sres.ok) {
-			_baseDownloader.sendData(err, sres);
+			_baseDownloader.sendData(err, result);
 			return false;
 		}
-		var result = {
-			url       : urlInfo.url,//抓取的地址
-			startTime : startTime,//开始时间
-			endTime   : Date.now(),//结束时间
-			statusCode: sres.status,//状态code
-			header    : sres.headers || "",//抓取这个页面的header信息
-			content   : sres.text//抓取到的html结构
-		};
+		console.log(sres.request.url);
+
 		_baseDownloader.sendData(null, result);
 	});
 };

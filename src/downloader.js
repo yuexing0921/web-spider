@@ -4,7 +4,7 @@
  */
 'use strict';
 const path   = require('path');
-let Page = require('./page');
+let Page     = require('./page');
 let JsonData = require('./common/jsonData');
 class Downloader {
 	constructor(_spiderCore) {
@@ -30,15 +30,13 @@ class Downloader {
 
 	//负责数据格式化以及发送
 	sendData(err, data) {
-		var pageInfo = new Page(data,this.spiderCore);
-
 		let baseMsgCode = this.spiderCore._config.baseMsgCode;
 		let jsonData    = new JsonData();
 		if (err) {
 			jsonData.code = baseMsgCode.serverError;
 			jsonData.msg  = String(err);
 		}
-		jsonData.data = pageInfo || {};
+		jsonData.data = new Page(data, this.spiderCore);
 		this.spiderCore.complete(jsonData);
 	}
 }
