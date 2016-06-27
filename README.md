@@ -4,7 +4,7 @@
 
 * 主体核心是core.js这个文件，这是一个继承自EventEmitter的类。
 
-### expamle
+### 开始
 
 ```
 //最简单的一个爬虫

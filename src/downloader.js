@@ -4,6 +4,7 @@
  */
 'use strict';
 const path   = require('path');
+let Page = require('./page');
 let JsonData = require('./common/jsonData');
 class Downloader {
 	constructor(_spiderCore) {
@@ -11,14 +12,14 @@ class Downloader {
 
 		this.cwdPath = path.resolve(__dirname);//设置执行的路径，为了防止路径过深，所以在Downloader就设置好
 
-		if (!this.spiderCore.setting.urlInfo.generatePath) {
+		if (!this.spiderCore.spiderConf.urlInfo.generatePath) {
 			//设置测试产生的结果的路径
-			this.spiderCore.setting.urlInfo.generatePath = this.spiderCore.runDir;
+			this.spiderCore.spiderConf.urlInfo.generatePath = this.spiderCore.runDir;
 		}
 	}
 
 	start() {
-		if (this.spiderCore.setting.urlInfo.isDynamic) {
+		if (this.spiderCore.spiderConf.urlInfo.isDynamic) {
 			//如果是需要执行动态js的网站
 			require('./downloader/dynamic')(this);
 		} else {
@@ -28,8 +29,8 @@ class Downloader {
 	}
 
 	//负责数据格式化以及发送
-	sendData(err, pageInfo) {
-
+	sendData(err, data) {
+		var pageInfo = new Page(data,this.spiderCore);
 
 		let baseMsgCode = this.spiderCore._config.baseMsgCode;
 		let jsonData    = new JsonData();

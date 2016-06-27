@@ -7,7 +7,7 @@ let request = require('superagent');
 require('superagent-proxy')(request);
 let downloader = (_baseDownloader) => {
 	let spiderCore = _baseDownloader.spiderCore,
-	    urlInfo    = spiderCore.setting.urlInfo,
+	    urlInfo    = spiderCore.spiderConf.urlInfo,
 	    startTime  = Date.now();
 	//设置基本信息
 	let q = request.get(urlInfo.url).set(urlInfo.requestHead || {});

@@ -11,34 +11,34 @@ let cache         = require('./cache');
 let logger        = require('./common/logger');
 /**
  * SpiderCore的构成
- * 0.{object} setting，这是一个爬虫实例的启动参数
+ * 0.{object} spiderConf，这是一个爬虫实例的启动参数
  * 1.{object} logger这是爬虫自身的日志输出系统，和log4js一样有六级，默认是INFO级别
  * 2.{object} _config这是爬虫自身的一些配置，这个不需要设置
  * */
 class SpiderCore extends EventEmitter {
 	/**
-	 * @param {object} setting爬虫的各项启动参数
+	 * @param {object} spiderConf爬虫的各项启动参数
 	 * * */
-	constructor(setting) {
+	constructor(spiderConf) {
 		super();
 
 		this._config = require('./config');//爬虫自身的配置
-		if (setting.logLevel) {//设置日志级别
-			logger.setLevel(setting.logLevel);
+		if (spiderConf.logLevel) {//设置日志级别
+			logger.setLevel(spiderConf.logLevel);
 		}
 		this.logger = logger;//为了能更好的控制日志输出，用了一个中间变量做输出，不排除以后用log4js作为日志处理
 		this.runDir = path.dirname(require.main.filename);//设置执行爬虫的根目录
 		this._simpleCache = new cache.SimpleCache();//用于缓存抓取的url
 		this._urlListCache =  new cache.SimpleCache();//用于缓存url
-		this.setting = setting;//启动一个爬虫实例需要的配置
-		this.setting.urlInfo.url = encodeURI(this.setting.urlInfo.url);
+		this.spiderConf = spiderConf;//启动一个爬虫实例需要的配置
+		this.spiderConf.urlInfo.url = encodeURI(this.spiderConf.urlInfo.url);
 	}
 
 	start() {
-		checkSetting(this.setting);//检查setting设置是否合法
-		var url = this.setting.urlInfo.url;
+		checkspiderConf(this.spiderConf);//检查spiderConf设置是否合法
+		var url = this.spiderConf.urlInfo.url;
 		var cache = this._simpleCache.get(url);
-		logger.info(this.setting.urlInfo.url + " Spider start ...");
+		logger.info(this.spiderConf.urlInfo.url + " Spider start ...");
 		if(cache){
 			complete(cache.value);
 		}else{
@@ -64,11 +64,11 @@ class SpiderCore extends EventEmitter {
 		logger.info("Spider end ...");
 	}
 }
-let checkSetting = function(setting){
-	if (!setting.urlInfo) {
+let checkspiderConf = function(spiderConf){
+	if (!spiderConf.urlInfo) {
 		throw new Error("urlInfo不能为空");
 	}
-	if(!urlUtil.isLegitimate(setting.urlInfo.url)){
+	if(!urlUtil.isLegitimate(spiderConf.urlInfo.url)){
 		throw new Error("urlInfo.url设置的不合法");
 	}
 };

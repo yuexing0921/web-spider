@@ -14,7 +14,7 @@ const osType          = require('os').type();
 let dynamicDownloader = function (_baseDownloader) {
 
 	let spiderCore    = _baseDownloader.spiderCore,
-	    urlInfo     = spiderCore.setting.urlInfo,
+	    urlInfo     = spiderCore.spiderConf.urlInfo,
 	    logger      = spiderCore.logger,
 	    baseMsgCode = spiderCore._config.baseMsgCode,
 	    cwdPath     = path.resolve(_baseDownloader.cwdPath, '../src/_lib');
