@@ -45,7 +45,7 @@ let downloader = (_baseDownloader) => {
 			_baseDownloader.sendData(err, result);
 			return false;
 		}
-		console.log(sres.request.url);
+		//console.log(sres.request.url);
 
 		_baseDownloader.sendData(null, result);
 	});

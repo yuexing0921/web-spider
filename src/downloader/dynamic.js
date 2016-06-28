@@ -57,20 +57,20 @@ let dynamicDownloader = function (_baseDownloader) {
 	//);
 	let killPhantomjs = function (err, data) {
 		//负责销毁phantomjs和传递数据
-		var errStr = '';
 		if (err) {
-			errStr = err;
-		}
-		try {
-			data = JSON.parse(data);
-			if (baseMsgCode.success !== data.code) {
-				errStr = data.msg;
-			} else {
-				data = data.data;
+			_baseDownloader.sendData(err, data);
+		}else{
+			try {
+				data = JSON.parse(data);
+				if (baseMsgCode.success !== data.code) {
+					data = data.msg;
+				} else {
+					data = data.data;
+				}
+				_baseDownloader.sendData(null, data);
+			} catch (e) {
+				_baseDownloader.sendData(e, data);
 			}
-			_baseDownloader.sendData(errStr, data);
-		} catch (e) {
-			_baseDownloader.sendData(e, data);
 		}
 		phantomChild.kill();
 	};

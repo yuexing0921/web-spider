@@ -175,13 +175,13 @@ var JsonData                = function (code, msg, data) {
 	//数据处理
 	main          : function (status) {
 		var result = {
-			url       : page.url,//抓取的地址
-			startTime : startTime,//开始时间
-			endTime   : Date.now(),//结束时间
-			statusCode: page.status,//状态code
-			header    : page.settings.userAgent  || "",//抓取这个页面的header信息
-			cookies   : page.cookies,
-			content   : page.content//抓取到的html结构
+			url            : page.url,//抓取的地址
+			startTime      : startTime,//开始时间
+			endTime        : Date.now(),//结束时间
+			statusCode     : page.status,//状态code
+			responseHeader : page.settings.userAgent || "",//抓取这个页面的header信息
+			responseCookies: page.cookies,
+			content        : page.content//抓取到的html结构
 		};
 		this.nodeData(status, result)
 	},
