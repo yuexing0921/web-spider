@@ -1,6 +1,6 @@
 {
   "name": "web-spider",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "description": "web-spider is a simple and fast web spider written with Nodejs!",
   "homepage": "https://github.com/yuexing0921/web-spider",
