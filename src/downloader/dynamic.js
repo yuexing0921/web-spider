@@ -84,7 +84,10 @@ let dynamicDownloader = function (_baseDownloader) {
 	//获取phantomjs的数据
 	phantomChild.stdout.on('data', function (data) {
 		//logger.info("phantomChild data");
-		logger.info(data);
+		if(typeof data == "object"){
+			data = data.toString();
+		}
+		//logger.info(data);
 		data = data.trim();
 		if (receivedData == '' && !data.startsWith('{')) {
 			killPhantomjs('phantomChild: ' + data);

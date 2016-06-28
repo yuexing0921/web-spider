@@ -4,8 +4,13 @@
 
 * 主体核心是core.js这个文件，这是一个继承自EventEmitter的类。
 
-### 开始
+Prerequisites
+-------------
 
+- `node`: This requires Node 6.x or greater.
+
+Getting started
+-------------
 ```
 //最简单的一个爬虫
 //爬虫参数初始化
@@ -25,10 +30,12 @@ spider.on('error',(err) =>{
 ```
 
 
-### 其他expamle
+Other examples
+-------------
 例子可以参见examples文件夹的
 
-### API
+API
+-------------
 创建一个爬虫需要定义 urlInfo
 ##### `1.urlInfo` : {object}，它有以下属性：
 - **必须** `url             : {string}` 需要抓取的地址。
