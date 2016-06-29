@@ -31,8 +31,14 @@ class Downloader {
 	//负责数据格式化以及发送
 	sendData(err, data) {
 		let baseMsgCode = this.spiderCore._config.baseMsgCode;
+		let logger = this.spiderCore.logger;
 		let jsonData    = new JsonData();
 		if (err) {
+			logger.error("request url fail: " + this.spiderCore.spiderConf.urlInfo.url);
+			logger.error("error info: ");
+			logger.error(err);
+			logger.error("data info: ");
+			logger.error(data);
 			jsonData.code = baseMsgCode.serverError;
 			jsonData.msg  = String(err);
 		}
