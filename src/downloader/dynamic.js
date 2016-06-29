@@ -34,7 +34,9 @@ let dynamicDownloader = function (_baseDownloader) {
 	if(urlInfo.proxy){
 		cmdLines.push('--proxy=' + urlInfo.proxy.host + ":" + urlInfo.proxy.port);
 		cmdLines.push('--proxy-type='+ urlInfo.proxy.protocol);
-		cmdLines.push('--proxy-auth=' + urlInfo.proxy.username + ":" + urlInfo.proxy.password);
+		if(urlInfo.proxy.username){
+			cmdLines.push('--proxy-auth=' + urlInfo.proxy.username + ":" + urlInfo.proxy.password);
+		}
 	}
 
 	//4. 添加和phantomjs桥接js
