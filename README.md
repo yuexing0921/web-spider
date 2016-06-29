@@ -34,8 +34,8 @@ Other examples
 -------------
 例子可以参见examples文件夹的
 
-API
--------------
+参数例子
+----
 创建一个爬虫需要定义 urlInfo
 ##### `1.urlInfo` : {object}，它有以下属性：
 - **必须** `url             : {string}` 需要抓取的地址。
@@ -47,5 +47,8 @@ API
 - **选填** `generatePath    : {string}` 生成图片存放在哪里，默认：会放置在examples里面
 - **选填** `tiemout         : {number}` 执行的超时时间，默认：10000毫秒 即10秒
 
-##### `2.logLevel` : {string} 设置爬虫的日志级别,默认是'INFO'
+##### `2.logger` : {object} 设置爬虫的日志记录
+现在接受log4js的日志传入，
+
+##### `3.logLevel` : {string} 设置爬虫的日志级别,默认是'INFO'
 和log4js的日志级别是一样,共6个级别FATAL>ERROR>WARN>INFO>DEBUG>TRACE

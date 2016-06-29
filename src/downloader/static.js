@@ -21,9 +21,21 @@ let downloader = (_baseDownloader) => {
 
 	//请求信息
 	q.end((err, sres) => {
+		var result = Object.create(null);
+		if(err && err.code == 'ENOTFOUND'){
+			result = {
+				statusCode     : err.code,
+				url            : urlInfo.url
+			};
+			_baseDownloader.sendData(err, result);
+			return false;
+		}
 
-		var result = {
-
+		//if (err || !sres.ok) {
+		//	_baseDownloader.sendData(err, result);
+		//	return false;
+		//}
+		result = {
 			statusCode     : sres.status,
 			url            : sres.request.url,
 			protocol       : sres.request.protocol,
@@ -41,12 +53,6 @@ let downloader = (_baseDownloader) => {
 
 			content        : sres.text//抓取到的html结构
 		};
-		if (err || !sres.ok) {
-			_baseDownloader.sendData(err, result);
-			return false;
-		}
-		//console.log(sres.request.url);
-
 		_baseDownloader.sendData(null, result);
 	});
 };

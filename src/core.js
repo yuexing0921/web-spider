@@ -21,8 +21,13 @@ class SpiderCore extends EventEmitter {
 	 * * */
 	constructor(spiderConf) {
 		super();
+		checkSpiderConf(spiderConf);//检查spiderConf设置是否合法
 
 		this._config = require('./config');//爬虫自身的配置
+
+		if(spiderConf.logger){
+			logger = spiderConf.logger;
+		}
 		if (spiderConf.logLevel) {//设置日志级别
 			logger.setLevel(spiderConf.logLevel);
 		}
@@ -35,7 +40,6 @@ class SpiderCore extends EventEmitter {
 	}
 
 	start() {
-		checkspiderConf(this.spiderConf);//检查spiderConf设置是否合法
 		var url = this.spiderConf.urlInfo.url;
 		var cache = this._simpleCache.get(url);
 		logger.info(this.spiderConf.urlInfo.url + " Spider start ...");
@@ -64,12 +68,17 @@ class SpiderCore extends EventEmitter {
 		logger.info("Spider end ...");
 	}
 }
-let checkspiderConf = function(spiderConf){
+let checkSpiderConf = function(spiderConf){
 	if (!spiderConf.urlInfo) {
 		throw new Error("urlInfo不能为空");
 	}
 	if(!urlUtil.isLegitimate(spiderConf.urlInfo.url)){
 		throw new Error("urlInfo.url设置的不合法");
 	}
+
+	if(spiderConf.logger && !(typeof spiderConf.logger == "object")){
+		throw new Error("logger设置的API必须参照log4js，否则不合法");
+	}
+
 };
 module.exports = SpiderCore;
