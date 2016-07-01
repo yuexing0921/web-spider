@@ -3,7 +3,9 @@
  * 爬虫的静态下载模块
  */
 'use strict';
+const _ = require('lodash');
 let request = require('superagent');
+
 require('superagent-proxy')(request);
 let downloader = (_baseDownloader) => {
 	let spiderCore = _baseDownloader.spiderCore,
@@ -15,18 +17,20 @@ let downloader = (_baseDownloader) => {
 
 
 	//如果有proxy信息
-	if (spiderCore.proxy) {
-		q = q.proxy(spiderCore.proxy);
+	if (urlInfo.proxy) {
+		q = q.proxy(urlInfo.proxy);
 	}
 
 	//请求信息
 	q.end((err, sres) => {
 		var result = Object.create(null);
-		if(err && err.code == 'ENOTFOUND'){
-			result = {
-				statusCode     : err.code,
-				url            : urlInfo.url
-			};
+		if(err){
+			let netError = spiderCore._config.netError;
+			if(sres && sres.status == 403){
+				err.code = 'Forbidden';
+			}
+			result = netError[err.code] || {statusCode : err.code||sres.status};
+			result = _.merge(result,urlInfo);
 			_baseDownloader.sendData(err, result);
 			return false;
 		}
@@ -53,6 +57,7 @@ let downloader = (_baseDownloader) => {
 
 			content        : sres.text//抓取到的html结构
 		};
+		result = _.merge(result,urlInfo);
 		_baseDownloader.sendData(null, result);
 	});
 };
