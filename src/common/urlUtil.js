@@ -96,13 +96,19 @@ class UrlUtil {
 	}
 
 	static getProtocol(url) {
-		var protocol = /https?:/gi.exec(url);
+		var protocol = /https?:/i.exec(url);
 		if (protocol && protocol.length > 0) {
 			return protocol[0];
 		}
 		return 'http:';
 	}
-
+	static getOrigin(url){
+		var origin = /https?:\/\/[\w|.|:]+/i.exec(url);
+		if (origin && origin.length > 0) {
+			return origin[0];
+		}
+		return '';
+	}
 	/**
 	 * 获取url后面的所有参数 url为传过来的链接
 	 * @param {string} id为参数名
