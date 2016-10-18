@@ -5,7 +5,7 @@
 'use strict';
 const path   = require('path');
 let Page     = require('./page');
-let JsonData = require('./common/jsonData');
+let JsonData = require('./common/JsonData');
 class Downloader {
 	constructor(_spiderCore) {
 		this.spiderCore = _spiderCore;
