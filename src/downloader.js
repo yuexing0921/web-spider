@@ -4,6 +4,8 @@
  */
 'use strict';
 const path   = require('path');
+let crawler = require('./downloader/dynamic');
+let phantomjs = require('./downloader/static');
 let Page     = require('./page');
 let JsonData = require('./common/JsonData');
 class Downloader {
@@ -21,10 +23,10 @@ class Downloader {
 	start() {
 		if (this.spiderCore.spiderConf.urlInfo.isDynamic) {
 			//如果是需要执行动态js的网站
-			require('./downloader/dynamic')(this);
+			crawler(this);
 		} else {
 			//这是静态请求
-			require('./downloader/static')(this);
+			phantomjs(this);
 		}
 	}
 
