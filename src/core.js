@@ -68,7 +68,7 @@ class SpiderCore extends EventEmitter {
 		logger.info("Spider end ...");
 	}
 }
-let checkSpiderConf = function(spiderConf){
+let checkSpiderConf = (spiderConf)=>{
 	if (!spiderConf.urlInfo) {
 		throw new Error("urlInfo不能为空");
 	}
